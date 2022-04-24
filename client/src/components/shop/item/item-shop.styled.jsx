@@ -28,6 +28,7 @@ export const CryptoData = styled.div`
     display: flex;
     flex-direction: column;
     color: #001c71;
+    width: 100px;
   }
   h3 {
     margin: 0;

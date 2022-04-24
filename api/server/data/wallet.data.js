@@ -1,17 +1,9 @@
-const crypto = require("../models/cryptos.model");
-const { Sequelize } = require("sequelize");
-const coinGeckoService = require("../service/coinGecko.service");
+const axios = require("axios");
 
-exports.getAmount = async () => {
-  return crypto.findAll({
-    attributes: [
-      [
-        Sequelize.fn("SUM", Sequelize.cast(Sequelize.col("quantity"), "float")),
-        "totalAssetAmount",
-      ],
-    ],
+exports.getAllCryptos = async () => {
+  const response = await axios({
+    url: "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false",
+    method: "get",
   });
-};
-exports.getTopCryptos = async () => {
-  return coinGeckoService.getAllCryptos();
+  return response.data;
 };

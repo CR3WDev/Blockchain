@@ -1,10 +1,15 @@
+const cryptosData = require("../data/cryptos.data");
 const walletData = require("../data/wallet.data");
-exports.getAmount = async () => {
-  const amount = await walletData.getAmount();
-  return amount;
+exports.getAllCryptos = async () => {
+  const result = await walletData.getAllCryptos();
+  return result;
 };
-exports.getTopCryptos = async () => {
-  const cryptos = await walletData.getTopCryptos();
-  let topCryptos = cryptos.slice(0, 5);
-  return topCryptos;
+exports.getCryptosTotalBalance = async () => {
+  const cryptos = await cryptosData.getCryptos();
+  let result = 0;
+
+  cryptos.map((data) => {
+    result += data.quantity * data.currentPrice;
+  });
+  return result;
 };

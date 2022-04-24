@@ -6,11 +6,23 @@ export const Container = styled.div`
   padding: 30px;
   box-shadow: 0px 0px 8px #eee;
 `;
-export const AmountBox = styled.div``;
+export const AmountBox = styled.div`
+  @media screen and (max-width: 700px) {
+    & {
+      margin-top: 20px;
+    }
+  }
+`;
 
 export const InputBox = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
+
+  @media screen and (max-width: 700px) {
+    & {
+      flex-direction: column;
+    }
+  }
 `;
 export const ItemsBox = styled.div`
   margin-top: 50px;

@@ -1,11 +1,11 @@
 const cryptosData = require("../data/cryptos.data");
-const coinGeckoSerice = require("../service/coinGecko.service");
+const walletService = require("../service/wallet.service");
 
 exports.getCryptos = async () => {
   return await cryptosData.getCryptos();
 };
 exports.addCryptos = async ({ id, quantity }) => {
-  const allCryptos = await coinGeckoSerice.getAllCryptos();
+  const allCryptos = await walletService.getAllCryptos();
 
   allCryptos.map((cryptos) => {
     if (cryptos.id === id) {
@@ -29,6 +29,5 @@ exports.deleteCryptos = async (id) => {
   return cryptosData.deleteCryptos(id);
 };
 exports.getCryptosById = async (id) => {
-  const crypto = cryptosData.getCryptosById(id);
-  return crypto;
+  return cryptosData.getCryptosById(id);
 };

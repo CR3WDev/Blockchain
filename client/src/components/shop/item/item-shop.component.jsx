@@ -2,16 +2,19 @@ import { Button } from "@mui/material";
 import React from "react";
 import { useCount } from "../../../context/count";
 import { api } from "../../../services/api";
+import { EditItem } from "./edit-item";
 import { Container, CryptoData, ImageBox, ButtonBox } from "./item-shop.styled";
 
 export const ItemShop = (props) => {
   const { count, setCount } = useCount();
   const { data } = props;
+
   const removeCrypto = (id) => {
     api.delete(`cryptos/${id}`).then(() => {
       setCount(count + 1);
     });
   };
+
   return data.map((crypto) => {
     const currentValue = (crypto.quantity * crypto.currentPrice).toFixed(2);
     return (
@@ -34,9 +37,7 @@ export const ItemShop = (props) => {
           </div>
         </CryptoData>
         <ButtonBox>
-          <Button variant="contained" style={{ marginRight: 10 }}>
-            Edit
-          </Button>
+          <EditItem cryptoId={crypto.id} cryptoQuantity={crypto.quantity} />
           <Button
             variant="outlined"
             color="error"

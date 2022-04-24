@@ -1,4 +1,5 @@
 import React from "react";
+import { ToastContainer, toast } from "react-toastify";
 import { Button, TextField } from "@mui/material";
 import { Autocomplete } from "@mui/material";
 import { AmountBox, Container, InputBox, ItemsBox } from "./shop.styled";
@@ -20,6 +21,8 @@ export const Shop = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
 
+  const notifyError = () => toast.error("Please use valid options");
+  const notifySucess = () => toast("crypto added");
   const getAllCryptos = () => {
     api.get("wallet/allCryptos").then((data) => {
       setAllCryptos(data.data);
@@ -74,6 +77,7 @@ export const Shop = () => {
         result = true;
         return null;
       }
+      return null;
     });
     return result;
   };
@@ -81,6 +85,9 @@ export const Shop = () => {
     if (isValidFields()) {
       getCryptoBySymbolAndSave(autoCompleteValue);
       setAutoCompleteValue("");
+      notifySucess();
+    } else {
+      notifyError();
     }
   };
   return (
@@ -127,6 +134,7 @@ export const Shop = () => {
           <ItemShop data={userCryptos} />
         </ItemsBox>
       </Container>
+      <ToastContainer />
     </>
   );
 };

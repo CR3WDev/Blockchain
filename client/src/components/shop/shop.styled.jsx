@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   border-radius: 14px;
-  margin: 30px;
   padding: 30px;
   box-shadow: 0px 0px 8px #eee;
+  height: calc(100vh - 220px);
 `;
 export const AmountBox = styled.div`
   @media screen and (max-width: 700px) {

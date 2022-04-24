@@ -5,18 +5,9 @@ import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
 import { api } from "../../../../services/api";
 import { useCount } from "../../../../context/count";
+import { toast } from "react-toastify";
 
 export const EditItem = (props) => {
-  const { cryptoId } = props;
-  const { cryptoQuantity } = props;
-
-  const { count, setCount } = useCount();
-  const [open, setOpen] = React.useState(false);
-  const [quantityValue, setQuantityValue] = React.useState(cryptoQuantity);
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   const style = {
     position: "absolute",
     top: "50%",
@@ -28,15 +19,36 @@ export const EditItem = (props) => {
     boxShadow: 24,
     p: 4,
   };
+
+  const { cryptoId } = props;
+  const { cryptoQuantity } = props;
+
+  const { count, setCount } = useCount();
+  const [open, setOpen] = React.useState(false);
+  const [quantityValue, setQuantityValue] = React.useState(cryptoQuantity);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const editCrypto = (id) => {
     api.put(`cryptos/${id}`, { quantity: quantityValue }).then((data) => {
       setCount(count + 1);
     });
   };
   const handleOnEditClick = () => {
-    setOpen(false);
-    editCrypto(cryptoId);
+    if (isQuantityValid()) {
+      setOpen(false);
+      editCrypto(cryptoId);
+      notifySucess();
+    } else {
+      notifyError();
+    }
   };
+  const isQuantityValid = () => {
+    return quantityValue > 0 ? true : false;
+  };
+  const notifyError = () => toast.error("Please use a valid options");
+  const notifySucess = () => toast("crypto edited");
   return (
     <div>
       <Button
